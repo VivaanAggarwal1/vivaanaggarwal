@@ -11,8 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Copy email buttons
-  const copy = txt => navigator.clipboard?.writeText(txt).then(()=> flash('Email copied'));
+  // Copy email
+  const copy = txt => {
+    if (!navigator.clipboard) {
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = txt; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); flash('Email copied'); } catch(e) {}
+      ta.remove();
+      return;
+    }
+    navigator.clipboard.writeText(txt).then(()=> flash('Email copied'));
+  };
   document.getElementById('copyEmail')?.addEventListener('click', () => copy(document.getElementById('email')?.textContent.trim()));
   document.getElementById('copyEmail2')?.addEventListener('click', () => copy(document.getElementById('email2')?.textContent.trim()));
 
