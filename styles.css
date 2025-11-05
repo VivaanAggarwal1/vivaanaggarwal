@@ -1,4 +1,4 @@
-/* Strong satin purple + matte-black animated gradient, glass cards and polished UI */
+/* Strong satin purple + matte-black visual, glass cards and polished UI (NO background animation) */
 :root{
   --bg:#060409;
   --panel:#0f0c13;
@@ -13,42 +13,29 @@
   --gradient-opacity: 0.065; /* overall subtlety */
 }
 
-/* animated background gradient layer */
+/* animated background gradient layer - REMOVED / disabled (static subtle tint) */
 body::before{
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(120deg, rgba(125,76,255,0.6), rgba(36,14,55,0.5) 30%, rgba(8,8,10,1) 60%, rgba(0,0,0,1));
-  background-size: 300% 300%;
-  opacity: var(--gradient-opacity);
-  filter: blur(36px) saturate(1.05);
-  animation: bgShift 18s linear infinite;
+  /* static soft tint instead of animation */
+  background: linear-gradient(120deg, rgba(125,76,255,0.35), rgba(36,14,55,0.25) 30%, rgba(8,8,10,1) 60%, rgba(0,0,0,1));
+  opacity: 0.04;
+  filter: blur(28px) saturate(1.02);
   pointer-events: none;
 }
 
-/* a very subtle second layer with matte band movement (keeps it professional) */
+/* a very subtle matte band layer */
 body::after{
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   background: linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0.0) 50%, rgba(0,0,0,0.35));
-  opacity: 0.12;
+  opacity: 0.08;
   mix-blend-mode: multiply;
-  animation: pan 26s linear infinite;
   pointer-events: none;
-}
-
-@keyframes bgShift{
-  0%{ background-position: 0% 50%; }
-  50%{ background-position: 100% 50%; }
-  100%{ background-position: 0% 50%; }
-}
-@keyframes pan{
-  0%{ transform: translateX(-5%); }
-  50%{ transform: translateX(5%); }
-  100%{ transform: translateX(-5%); }
 }
 
 /* Typography and base */
