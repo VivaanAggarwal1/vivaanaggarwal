@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cryptic Hunt | Vivaan Aggarwal</title>
+  <!-- Use the same Poppins font link as your main site (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="hunt-container">
+    <a class="back" href="/"><!-- link back to your main site -->
+      ← Back to portfolio
+    </a>
+
+    <h1 class="title">🕵️ Cryptic Hunt</h1>
+    <p class="hint">Solve the clues. Each correct answer reveals the next clue.</p>
+
+    <div class="riddle glass" id="clue-area">
+      <h2 id="clue-title">Clue #1</h2>
+      <p id="clue-text">
+        “I have a ring but no finger, I connect people but can’t speak. What am I?”
+      </p>
+
+      <input type="text" id="answer" placeholder="Enter your answer..." autocomplete="off" />
+      <div style="margin-top:10px">
+        <button id="check">Submit</button>
+        <button id="reset" style="margin-left:8px">Reset</button>
+      </div>
+
+      <p id="result" class="result" aria-live="polite"></p>
+    </div>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Vivaan Aggarwal</p>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
