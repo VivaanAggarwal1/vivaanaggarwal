@@ -1,54 +1,65 @@
-// Minimal submit-only interface
+// main.js — minimal, robust submit handling for cryptic level
 document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('answer-form');
   const input = document.getElementById('answer');
-  const btn = document.getElementById('submit');
   const feedback = document.getElementById('feedback');
 
-  // Set your correct answer here (case-insensitive)
-  // Change this to whatever you want the real solution to be.
-  const correctAnswer = 'vnvy0ufy';
+  // Primary accepted answer(s) — lowercase normalized.
+  // Change/add entries to accept more variants.
+  const accepted = new Set([
+    'vnvy0ufy', // primary expected answer
+    // add other normalized alternatives if desired:
+    // 'vnvyof y', 'vnvy0uffy', etc (normalized w/o spaces)
+  ]);
 
-  // helper to normalize strings for comparison
-  const normalize = s => (s || '').trim().toLowerCase();
+  const normalize = s => (s || '').toLowerCase().trim();
 
-  // on submit
-  btn.addEventListener('click', () => {
+  // helper: show wrong
+  const showWrong = () => {
+    feedback.className = 'feedback wrong';
+    feedback.textContent = 'Wrong';
+  };
+
+  // helper: show correct + +1
+  const showCorrect = () => {
+    feedback.className = 'feedback correct';
+    feedback.textContent = 'Correct!';
+
+    // append +1 badge shortly after
+    setTimeout(() => {
+      // make sure we don't append duplicate badges
+      const existing = feedback.querySelector('.plus');
+      if (existing) return;
+      const span = document.createElement('span');
+      span.className = 'plus';
+      span.textContent = '+1';
+      feedback.appendChild(span);
+    }, 260);
+  };
+
+  // handle submit from form (also works for Enter key)
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
     const val = normalize(input.value);
+
     if (!val) {
-      feedback.className = 'feedback wrong';
-      feedback.textContent = 'Wrong';
+      showWrong();
+      input.focus();
       return;
     }
 
-    if (val === normalize(correctAnswer)) {
-      feedback.className = 'feedback correct';
-      feedback.textContent = 'Correct!';
-
-      // show +1 after tiny delay
-      setTimeout(() => {
-        // append +1 badge
-        const badge = document.createElement('span');
-        badge.className = 'plus-badge';
-        badge.textContent = '+1';
-        // remove any existing badge first
-        const existing = feedback.querySelector('.plus-badge');
-        if (existing) existing.remove();
-        feedback.appendChild(badge);
-      }, 260);
-
-      // optionally disable input so user can't resubmit (comment out if not desired)
-      // input.disabled = true; btn.disabled = true;
+    if (accepted.has(val)) {
+      showCorrect();
+      input.blur();
+      // optionally disable to prevent repeat submissions
+      // input.disabled = true;
+      // form.querySelector('button[type="submit"]').disabled = true;
     } else {
-      feedback.className = 'feedback wrong';
-      feedback.textContent = 'Wrong';
+      showWrong();
+      input.focus();
     }
   });
 
-  // allow Enter to submit
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') btn.click();
-  });
-
-  // focus the input on load
+  // ensure accessible initial focus
   input.focus();
 });
