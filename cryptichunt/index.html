@@ -4,23 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Level — Vivaan Aggarwal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="hunt-root">
-    <div class="level-card">
-      <div id="level-text" class="level-text">
+  <main class="root" role="main" aria-label="Cryptic level">
+    <section class="card" aria-labelledby="level-title">
+      <div id="level-title" class="level-text">
         VANQUISH NOTHING, value your 0wn understanding, forge yourself.
       </div>
 
-      <div class="answer-row">
-        <input id="answer" type="text" inputmode="latin" autocomplete="off" spellcheck="false" placeholder="Type answer…" />
-        <button id="submit" class="btn">Submit</button>
-      </div>
+      <form id="answer-form" class="answer-form" autocomplete="off" novalidate>
+        <label for="answer" class="sr-only">Answer</label>
+        <input id="answer" name="answer" type="text" inputmode="latin"
+               placeholder="Type answer…" autocomplete="off" spellcheck="false" required />
+        <button id="submit" type="submit" class="submit-btn" aria-label="Submit answer">Submit</button>
+      </form>
 
-      <div id="feedback" class="feedback" aria-live="polite"></div>
-    </div>
+      <div id="feedback" class="feedback" aria-live="polite" aria-atomic="true"></div>
+    </section>
   </main>
 
   <script src="main.js"></script>
