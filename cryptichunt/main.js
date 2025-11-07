@@ -1,79 +1,54 @@
+// Minimal submit-only interface
 document.addEventListener('DOMContentLoaded', () => {
-  const checkBtn = document.getElementById('check');
-  const resetBtn = document.getElementById('reset');
   const input = document.getElementById('answer');
-  const result = document.getElementById('result');
-  const clueTitle = document.getElementById('clue-title');
-  const clueText = document.getElementById('clue-text');
-  const year = document.getElementById('year');
-  year.textContent = new Date().getFullYear();
+  const btn = document.getElementById('submit');
+  const feedback = document.getElementById('feedback');
 
-  // simple clue list — edit/add more clues here
-  const clues = [
-    { q: 'I have a ring but no finger, I connect people but can’t speak. What am I?', a: ['phone','telephone','mobile'] },
-    { q: 'I follow you everywhere but never touch your feet; I show your face without being deceit. What am I?', a: ['mirror'] },
-    { q: 'Final: Combine the first letters of the answers to form a 3-letter word. What is it?', a: [] } // final accepts code built at runtime
-  ];
+  // Set your correct answer here (case-insensitive)
+  // Change this to whatever you want the real solution to be.
+  const correctAnswer = 'vnvy0ufy';
 
-  let idx = 0;
-  function loadClue(i){
-    clueTitle.textContent = `Clue #${i+1}`;
-    clueText.textContent = clues[i].q;
-    input.value = '';
-    result.textContent = '';
-    input.focus();
-  }
+  // helper to normalize strings for comparison
+  const normalize = s => (s || '').trim().toLowerCase();
 
-  loadClue(idx);
-
-  checkBtn.addEventListener('click', () => {
-    const answer = input.value.trim().toLowerCase();
-    if (!answer) {
-      result.textContent = 'Type an answer before submitting.';
+  // on submit
+  btn.addEventListener('click', () => {
+    const val = normalize(input.value);
+    if (!val) {
+      feedback.className = 'feedback wrong';
+      feedback.textContent = 'Wrong';
       return;
     }
 
-    // special handling for the final clue: compute code from previous answers
-    if (idx === clues.length - 1) {
-      // build code from first letters of storedAnswers
-      const code = (window._crypticStored || []).map(s => s[0] || '').join('').toLowerCase();
-      if (answer === code) {
-        result.style.color = '#7dffb1';
-        result.textContent = '🎉 Correct — you completed the Cryptic Hunt!';
-      } else {
-        result.style.color = '#ff8a8a';
-        result.textContent = 'Incorrect final code. Check earlier answers.';
-      }
-      return;
-    }
+    if (val === normalize(correctAnswer)) {
+      feedback.className = 'feedback correct';
+      feedback.textContent = 'Correct!';
 
-    const possible = clues[idx].a;
-    if (possible.includes(answer)) {
-      // store answer for final code
-      window._crypticStored = window._crypticStored || [];
-      window._crypticStored[idx] = answer;
-      result.style.color = '#7dffb1';
-      result.textContent = '✅ Correct! Loading next clue...';
+      // show +1 after tiny delay
       setTimeout(() => {
-        idx++;
-        if (idx < clues.length) loadClue(idx);
-      }, 700);
+        // append +1 badge
+        const badge = document.createElement('span');
+        badge.className = 'plus-badge';
+        badge.textContent = '+1';
+        // remove any existing badge first
+        const existing = feedback.querySelector('.plus-badge');
+        if (existing) existing.remove();
+        feedback.appendChild(badge);
+      }, 260);
+
+      // optionally disable input so user can't resubmit (comment out if not desired)
+      // input.disabled = true; btn.disabled = true;
     } else {
-      result.style.color = '#ff8a8a';
-      result.textContent = '❌ Wrong answer. Try again.';
+      feedback.className = 'feedback wrong';
+      feedback.textContent = 'Wrong';
     }
   });
 
-  resetBtn.addEventListener('click', () => {
-    idx = 0;
-    window._crypticStored = [];
-    loadClue(idx);
-    result.style.color = '';
-    result.textContent = '';
+  // allow Enter to submit
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') btn.click();
   });
 
-  // allow Enter key to submit
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') checkBtn.click();
-  });
+  // focus the input on load
+  input.focus();
 });
