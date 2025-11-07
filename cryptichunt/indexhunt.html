@@ -4,29 +4,25 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Level</title>
-  <!-- Use this exact name for CSS -->
-  <link rel="stylesheet" href="styles.css?v=1">
   <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="./styleshunt.css?v=crypt3">
 </head>
 <body>
-  <main class="stage" role="main" aria-label="cryptic-level">
-    <article class="card" aria-labelledby="levelText">
-      <h1 id="levelText" class="level-text">
+  <main class="stage">
+    <article class="card">
+      <div class="level-text">
         VANQUISH NOTHING, value your 0wn understanding, forge yourself.
-      </h1>
+      </div>
 
       <form id="answerForm" class="controls" autocomplete="off" novalidate>
-        <label for="answer" class="sr-only">Answer</label>
-        <input id="answer" name="answer" type="text" inputmode="latin"
-               placeholder="Enter your answer…" autocomplete="off" spellcheck="false" />
-        <button id="submitBtn" type="submit" aria-label="Submit answer">Submit</button>
+        <input id="answer" type="text" placeholder="Enter your answer…" spellcheck="false" />
+        <button type="submit">Submit</button>
       </form>
 
-      <div id="feedback" class="feedback" aria-live="polite" aria-atomic="true"></div>
+      <div id="feedback" class="feedback" aria-live="polite"></div>
     </article>
   </main>
 
-  <!-- Use this exact name for JS -->
-  <script src="main.js?v=1"></script>
+  <script src="./mainhunt.js?v=crypt3"></script>
 </body>
 </html>
