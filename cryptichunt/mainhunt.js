@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('answerForm');
   const input = document.getElementById('answer');
   const feedback = document.getElementById('feedback');
-  const accepted = new Set(['vnvy0ufy']); // accepted answers
+  const accepted = new Set(['goodbye']); // accepted answers
 
   const normalize = str => (str || '').toLowerCase().trim();
 
