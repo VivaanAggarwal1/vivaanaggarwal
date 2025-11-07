@@ -1,28 +1,22 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Level — Vivaan Aggarwal</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level | VNvy0ufy</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="root" role="main" aria-label="Cryptic level">
-    <section class="card" aria-labelledby="level-title">
-      <div id="level-title" class="level-text">
-        VANQUISH NOTHING, value your 0wn understanding, forge yourself.
-      </div>
+  <div class="container">
+    <h1 class="level-text">VANQUISH NOTHING, value your 0wn understanding, forge yourself.</h1>
 
-      <form id="answer-form" class="answer-form" autocomplete="off" novalidate>
-        <label for="answer" class="sr-only">Answer</label>
-        <input id="answer" name="answer" type="text" inputmode="latin"
-               placeholder="Type answer…" autocomplete="off" spellcheck="false" required />
-        <button id="submit" type="submit" class="submit-btn" aria-label="Submit answer">Submit</button>
-      </form>
+    <div class="input-area">
+      <input type="text" id="answer" placeholder="Enter your answer..." autocomplete="off">
+      <button id="submit">Submit</button>
+    </div>
 
-      <div id="feedback" class="feedback" aria-live="polite" aria-atomic="true"></div>
-    </section>
-  </main>
+    <p id="feedback"></p>
+  </div>
 
   <script src="main.js"></script>
 </body>
