@@ -1,22 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Level | VNvy0ufy</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Level — VNvy0ufy</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1 class="level-text">VANQUISH NOTHING, value your 0wn understanding, forge yourself.</h1>
+  <main class="stage" role="main" aria-label="cryptic level">
+    <article class="card" aria-labelledby="levelText">
+      <h1 id="levelText" class="level-text">
+        VANQUISH NOTHING, value your 0wn understanding, forge yourself.
+      </h1>
 
-    <div class="input-area">
-      <input type="text" id="answer" placeholder="Enter your answer..." autocomplete="off">
-      <button id="submit">Submit</button>
-    </div>
+      <form id="answerForm" class="controls" autocomplete="off" novalidate>
+        <label for="answer" class="sr-only">Answer</label>
+        <input id="answer" name="answer" type="text" inputmode="latin"
+               placeholder="Enter your answer…" autocomplete="off" spellcheck="false" />
+        <button id="submitBtn" type="submit" aria-label="Submit answer">Submit</button>
+      </form>
 
-    <p id="feedback"></p>
-  </div>
+      <div id="feedback" class="feedback" aria-live="polite" aria-atomic="true"></div>
+    </article>
+  </main>
 
   <script src="main.js"></script>
 </body>
