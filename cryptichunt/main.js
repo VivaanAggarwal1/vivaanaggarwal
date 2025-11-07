@@ -1,42 +1,64 @@
+// main.js — minimal, robust logic (Enter and Button). Put in same folder.
 document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('answerForm');
   const input = document.getElementById('answer');
-  const submit = document.getElementById('submit');
   const feedback = document.getElementById('feedback');
 
-  // ✅ Correct answer(s) here (case-insensitive)
-  const correctAnswers = ['vnvy0ufy'];
+  // Accepted answers (normalized lower-case)
+  const accepted = new Set([
+    'vnvy0ufy'   // primary expected answer
+    // add variants if you want (e.g., 'vnvy0ufy.')
+  ]);
 
-  const normalize = s => (s || '').trim().toLowerCase();
+  const normalize = s => (s || '').toLowerCase().trim();
 
-  function showFeedback(type, text) {
-    feedback.className = type;
-    feedback.textContent = text;
+  function showWrong() {
+    feedback.className = 'feedback wrong';
+    feedback.textContent = 'Wrong';
   }
 
-  function addPlusOne() {
-    const badge = document.createElement('span');
-    badge.textContent = '+1';
-    badge.className = 'plus';
-    feedback.appendChild(badge);
+  function showCorrect() {
+    feedback.className = 'feedback correct';
+    feedback.textContent = 'Correct!';
+    // append +1 badge after brief delay to allow 'Correct!' to appear first
+    setTimeout(() => {
+      if (!feedback.querySelector('.plus')) {
+        const span = document.createElement('span');
+        span.className = 'plus';
+        span.textContent = '+1';
+        feedback.appendChild(span);
+      }
+    }, 260);
   }
 
-  function checkAnswer() {
-    const answer = normalize(input.value);
-    if (!answer) {
-      showFeedback('wrong', 'Wrong');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const val = normalize(input.value);
+    if (!val) {
+      showWrong();
+      input.focus();
       return;
     }
-
-    if (correctAnswers.includes(answer)) {
-      showFeedback('correct', 'Correct!');
-      setTimeout(addPlusOne, 300);
+    if (accepted.has(val)) {
+      showCorrect();
+      input.blur(); // optional: remove focus
     } else {
-      showFeedback('wrong', 'Wrong');
+      showWrong();
+      input.focus();
     }
-  }
-
-  submit.addEventListener('click', checkAnswer);
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') checkAnswer();
   });
+
+  // ensure Enter works even if form isn't used directly (redundant but safe)
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      form.dispatchEvent(new Event('submit', { cancelable: true }));
+    }
+  });
+
+  // autofocus for fast typing
+  input.focus();
+
+  // diagnostic attribute — confirms JS ran (use devtools console to check)
+  document.documentElement.setAttribute('data-cryptic-active', '1');
 });
