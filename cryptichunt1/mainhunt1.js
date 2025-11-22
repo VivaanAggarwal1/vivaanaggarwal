@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!feedback.querySelector('.plus')) {
         const plus = document.createElement('span');
         plus.className = 'plus';
-        plus.textContent = '+1';
+        plus.textContent = 'more soon';
         feedback.appendChild(plus);
       }
     }, 200);
